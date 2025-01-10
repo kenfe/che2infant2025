@@ -159,7 +159,8 @@
             .attr("viewBox", [0, 0, width, height])
             .style("font", "12px sans-serif");
 
-        const tree = d3.tree().size([height, width - 160]);
+        const tree = d3.tree().size([width - 160, height]);
+
 
         const root = d3.hierarchy(data);
         tree(root);
@@ -173,9 +174,9 @@
             .attr("fill", "none")
             .attr("stroke", "#555")
             .attr("stroke-width", 1.5)
-            .attr("d", d3.linkHorizontal()
-                .x(d => d.y)
-                .y(d => d.x));
+            .attr("d", d3.linkVertical()
+                .x(d => d.x)
+                .y(d => d.y));
 
         const node = g.selectAll(".node")
             .data(root.descendants())
