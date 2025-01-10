@@ -189,13 +189,14 @@
             .attr("r", 5);
 
         node.append("text")
-            .attr("dy", "0.31em")
-            .attr("x", d => d.children ? -10 : 10)
-            .attr("text-anchor", d => d.children ? "end" : "start")
+            .attr("dy", "1.5em") // 노드 아래로 텍스트 이동
+            .attr("x", 0)        // 텍스트를 노드 중심에 위치
+            .attr("text-anchor", "middle") // 중앙 정렬
             .text(d => d.data.name)
             .style("font-size", "12px")
             .clone(true).lower()
             .attr("stroke", "white");
+
     </script>
 </body>
 </html>
