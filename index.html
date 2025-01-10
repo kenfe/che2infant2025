@@ -82,7 +82,7 @@
         }
         svg {
             width: 100%;
-            height: 500px;
+            height: 600px;
         }
         footer {
             background-color: #4CAF50;
@@ -152,22 +152,24 @@
             ]
         };
 
-        const width = 800;
-        const height = 500;
+        const width = 600;
+        const height = 400;
 
         const svg = d3.select("svg")
-            .attr("viewBox", [-width / 2, -height / 2, width, height])
-            .style("font", "10px sans-serif");
+            .attr("viewBox", [0, 0, width, height])
+            .style("font", "12px sans-serif");
 
-        const tree = d3.tree().size([width - 100, height - 200]);
+        const tree = d3.tree().size([height, width - 160]);
 
         const root = d3.hierarchy(data);
         tree(root);
 
-        const link = svg.append("g")
-            .selectAll("path")
+        const g = svg.append("g").attr("transform", `translate(80,0)`);
+
+        g.selectAll(".link")
             .data(root.links())
             .join("path")
+            .attr("class", "link")
             .attr("fill", "none")
             .attr("stroke", "#555")
             .attr("stroke-width", 1.5)
@@ -175,10 +177,10 @@
                 .x(d => d.y)
                 .y(d => d.x));
 
-        const node = svg.append("g")
-            .selectAll("g")
+        const node = g.selectAll(".node")
             .data(root.descendants())
             .join("g")
+            .attr("class", "node")
             .attr("transform", d => `translate(${d.y},${d.x})`);
 
         node.append("circle")
@@ -187,9 +189,10 @@
 
         node.append("text")
             .attr("dy", "0.31em")
-            .attr("x", d => d.children ? -6 : 6)
+            .attr("x", d => d.children ? -10 : 10)
             .attr("text-anchor", d => d.children ? "end" : "start")
             .text(d => d.data.name)
+            .style("font-size", "12px")
             .clone(true).lower()
             .attr("stroke", "white");
     </script>
