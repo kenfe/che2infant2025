@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>영아부 소개</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -74,19 +75,14 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .hierarchy {
-            margin: 1rem 0;
-            text-align: center;
+        .tree-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
         }
-        .hierarchy ul {
-            list-style: none;
-            padding: 0;
-        }
-        .hierarchy ul li {
-            margin: 0.5rem 0;
-        }
-        .hierarchy ul li ul {
-            margin-left: 2rem;
+        svg {
+            width: 100%;
+            height: 500px;
         }
         footer {
             background-color: #4CAF50;
@@ -132,29 +128,70 @@
         </ul>
 
         <h2>조직</h2>
-        <div class="hierarchy">
-            <ul>
-                <li><strong>지도:</strong> 이상민 강도사</li>
-                <li>
-                    <strong>부장:</strong> 이근철 안수집사
-                    <ul>
-                        <li><strong>부감:</strong> 박혜영 집사</li>
-                        <li>
-                            <strong>총무처장:</strong> 추경진 집사
-                        </li>
-                        <li>
-                            <strong>예능처장:</strong> 서주희 집사
-                        </li>
-                        <li>
-                            <strong>생활처장:</strong> 김보민 집사
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+        <div class="tree-container">
+            <svg></svg>
         </div>
     </main>
     <footer>
         <p>&copy; 2025 영아부 | 우리 교회</p>
     </footer>
+
+    <script>
+        const data = {
+            name: "지도: 이상민 강도사",
+            children: [
+                {
+                    name: "부장: 이근철 안수집사",
+                    children: [
+                        { name: "부감: 박혜영 집사" },
+                        { name: "총무처장: 추경진 집사" },
+                        { name: "예능처장: 서주희 집사" },
+                        { name: "생활처장: 김보민 집사" }
+                    ]
+                }
+            ]
+        };
+
+        const width = 800;
+        const height = 500;
+
+        const svg = d3.select("svg")
+            .attr("viewBox", [-width / 2, -height / 2, width, height])
+            .style("font", "10px sans-serif");
+
+        const tree = d3.tree().size([width - 100, height - 200]);
+
+        const root = d3.hierarchy(data);
+        tree(root);
+
+        const link = svg.append("g")
+            .selectAll("path")
+            .data(root.links())
+            .join("path")
+            .attr("fill", "none")
+            .attr("stroke", "#555")
+            .attr("stroke-width", 1.5)
+            .attr("d", d3.linkHorizontal()
+                .x(d => d.y)
+                .y(d => d.x));
+
+        const node = svg.append("g")
+            .selectAll("g")
+            .data(root.descendants())
+            .join("g")
+            .attr("transform", d => `translate(${d.y},${d.x})`);
+
+        node.append("circle")
+            .attr("fill", d => d.children ? "#4CAF50" : "#2E7D32")
+            .attr("r", 5);
+
+        node.append("text")
+            .attr("dy", "0.31em")
+            .attr("x", d => d.children ? -6 : 6)
+            .attr("text-anchor", d => d.children ? "end" : "start")
+            .text(d => d.data.name)
+            .clone(true).lower()
+            .attr("stroke", "white");
+    </script>
 </body>
 </html>
