@@ -169,70 +169,10 @@
             <li>3. 하나님을 아는 기쁨과 즐거움을 통해 영아들이 하나님과의 첫 관계를 긍정적으로 형성할 수 있도록 돕는다.</li>
         </ul>
 
-        <h2>조직</h2>
-        <div class="tree-container">
-            <svg></svg>
-        </div>
     </main>
     <footer>
         <p>&copy; 2025 영아부 | 인천제2장로교회</p>
     </footer>
 
-    <script>
-        const data = {
-            name: "지도: 이상민 강도사",
-            children: [
-                {
-                    name: "부장: 이근철 안수집사",
-                    children: [
-                        { name: "부감: 박혜영 집사" },
-                        children: [
-                            { name: "총무처장: 추경진 집사" },
-                            { name: "교무처장: 김자영 집사" },
-                            { name: "생활처장: 김보민 집사" },
-                            { name: "예능처장: 위아영 집사" },
-                            { name: "회계: 우선희 집사" }
-                        ]
-                    ]
-                }
-            ]
-        };
-
-        const width = 600;
-        const height = 400;
-
-        const svg = d3.select("svg")
-            .attr("viewBox", [0, 0, width, height])
-            .style("font", "12px sans-serif");
-
-        const tree = d3.tree().size([width - 160, height]);
-
-        const root = d3.hierarchy(data);
-        tree(root);
-
-        const g = svg.append("g").attr("transform", `translate(80,0)`);
-
-        g.selectAll(".link")
-            .data(root.links())
-            .join("path")
-            .attr("fill", "none")
-            .attr("stroke", "#555")
-            .attr("stroke-width", 1.5)
-            .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y));
-
-        const node = g.selectAll(".node")
-            .data(root.descendants())
-            .join("g")
-            .attr("transform", d => `translate(${d.y},${d.x})`);
-
-        node.append("circle").attr("fill", "#4CAF50").attr("r", 5);
-        node.append("text")
-            .attr("dy", "1.5em")
-            .attr("x", 0)
-            .attr("text-anchor", "middle")
-            .text(d => d.data.name)
-            .style("font-size", "12px");
-
-    </script>
 </body>
 </html>
