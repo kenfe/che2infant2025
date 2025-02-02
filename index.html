@@ -102,15 +102,31 @@
         <h1>2025 인천 제2교회 영아부</h1>
         <p>하나님을 닮아가는 영아부</p>
     </header>
-    <nav>
-        <a href="https://docs.google.com/document/d/e/2PACX-1vQyM7XVBXPoVgRoRioMbOMH0vb2cuePKwi1_Q2iTubkAUw6-c6gkjtlm8-RCqSgoTPmiC8T4HOuKbsk/pub">교육계획</a>        
-        <a href="https://docs.google.com/document/d/e/2PACX-1vR1R3X-PRMSGgFEvN0aqBa9t7-1TCGkZSjhpCRJyqMR8Whr2BHZPdrEF9B4LSv57DBh8FTdCuMe_5MZ/pub">월별 계획</a>
-        <a href="https://docs.google.com/document/d/e/2PACX-1vSJABFJplc_zOp-nuavEHRLLzKQsJiv42Y6RBcPgdGeZzGHjWFi92HNzTKwFO3VT2aySty3yHYiFXw7/pub">예산계획</a>        
-        <a href="https://docs.google.com/document/d/e/2PACX-1vQFT7zB7nNG2djMgM4QstVOzBdoNT14gYn2fJI5ToJ2-ltrBblUm4111Au2Ca1Z1RqpvW1sv9X5B_Ef/pub">교사 조직</a>
-        <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQDl7P7j5BGKnYyxCqSDUexFCHStg5_hJcg1aWXTJ0nBjXldeNg2vaj-Rv7cMnaO1juXA3XN-LJQrLr/pubhtml">예배 담당 순서</a>
-        <a href="https://docs.google.com/document/d/e/2PACX-1vQwWRIU2JsCKHG_V16m_U-rjhK5RXtMsUysbFMQhs-8uGJ4z-MERo-gSCa2Zdaez65m-Id8RONp0XF8/pub">반 편성</a>
-        <a href="https://docs.google.com/document/d/e/2PACX-1vQjbNdAPhunEBkWmqRTCmlnwmW25m0QscI3FlmTxQJF-GVRu0W25ehL7Ez6Kbe6kZVKKAEM3tKShVmD/pub">처장회의</a>
-    </nav>
+nav {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* 가로 스크롤 가능 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    -webkit-overflow-scrolling: touch; /* 모바일에서 자연스러운 스크롤 */
+    padding: 0.5rem 0; /* 상하 여백 추가 */
+}
+
+nav a {
+    flex-shrink: 0; /* 축소되지 않도록 설정 */
+    margin: 0 10px;
+    padding: 1rem;
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav::-webkit-scrollbar {
+    display: none; /* 스크롤바 숨김 */
+}
+
     <main>
         <h2>교육 방향</h2>
         <p><strong>교회 표어:</strong> “지역과 열방을 향해 복음의 빛을 비추는 교회” (행 1:8)</p>
