@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2025 영아부 </title>
+    <title>2025 영아부</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <style>
@@ -30,12 +30,17 @@
         }
         nav {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             background-color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.5rem 0;
         }
         nav a {
-            margin: 0 15px;
+            flex-shrink: 0;
+            margin: 0 10px;
             padding: 1rem;
             text-decoration: none;
             color: #4CAF50;
@@ -44,6 +49,9 @@
         }
         nav a:hover {
             color: #2E7D32;
+        }
+        nav::-webkit-scrollbar {
+            display: none;
         }
         main {
             padding: 2rem;
@@ -102,38 +110,22 @@
         <h1>2025 인천 제2교회 영아부</h1>
         <p>하나님을 닮아가는 영아부</p>
     </header>
-nav {
-    display: flex;
-    justify-content: flex-start; /* 왼쪽 정렬 */
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow-x: auto; /* 가로 스크롤 가능 */
-    white-space: nowrap; /* 줄바꿈 방지 */
-    -webkit-overflow-scrolling: touch; /* 모바일에서 자연스러운 스크롤 */
-    padding: 0.5rem 0; /* 상하 여백 추가 */
-}
-
-nav a {
-    flex-shrink: 0; /* 축소되지 않도록 설정 */
-    margin: 0 10px;
-    padding: 1rem;
-    text-decoration: none;
-    color: #4CAF50;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-nav::-webkit-scrollbar {
-    display: none; /* 스크롤바 숨김 */
-}
-
+    <nav>
+        <a href="#">교육계획</a>        
+        <a href="#">월별 계획</a>
+        <a href="#">예산계획</a>        
+        <a href="#">교사 조직</a>
+        <a href="#">예배 담당 순서</a>
+        <a href="#">반 편성</a>
+        <a href="#">처장회의</a>
+    </nav>
     <main>
         <h2>교육 방향</h2>
         <p><strong>교회 표어:</strong> “지역과 열방을 향해 복음의 빛을 비추는 교회” (행 1:8)</p>
         <p><strong>부서 표어:</strong> 하나님을 닮아가는 영아부</p>
         <p><strong>주제 말씀:</strong></p>
         <blockquote>
-            에베소서 5:1-2상반절<br>
+            에베소서 5:1-2 상반절<br>
             그러므로 사랑을 받는 자녀 같이 너희는 하나님을 본받는 자가 되고<br>
             그리스도께서 너희를 사랑하신 것 같이 너희도 사랑 가운데서 행하라
         </blockquote>
@@ -160,7 +152,7 @@ nav::-webkit-scrollbar {
                 {
                     name: "부장: 이근철 안수집사",
                     children: [
-                        { name: "부감: 박혜영 집사" },                        
+                        { name: "부감: 박혜영 집사" },
                         { name: "총무처장: 추경진 집사" },
                         { name: "교무처장: 김자영 집사" },
                         { name: "예능처장: 집사" },
@@ -179,7 +171,6 @@ nav::-webkit-scrollbar {
 
         const tree = d3.tree().size([width - 160, height]);
 
-
         const root = d3.hierarchy(data);
         tree(root);
 
@@ -188,32 +179,23 @@ nav::-webkit-scrollbar {
         g.selectAll(".link")
             .data(root.links())
             .join("path")
-            .attr("class", "link")
             .attr("fill", "none")
             .attr("stroke", "#555")
             .attr("stroke-width", 1.5)
-            .attr("d", d3.linkVertical()
-                .x(d => d.x)
-                .y(d => d.y));
+            .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y));
 
         const node = g.selectAll(".node")
             .data(root.descendants())
             .join("g")
-            .attr("class", "node")
             .attr("transform", d => `translate(${d.y},${d.x})`);
 
-        node.append("circle")
-            .attr("fill", d => d.children ? "#4CAF50" : "#2E7D32")
-            .attr("r", 5);
-
+        node.append("circle").attr("fill", "#4CAF50").attr("r", 5);
         node.append("text")
-            .attr("dy", "1.5em") // 노드 아래로 텍스트 이동
-            .attr("x", 0)        // 텍스트를 노드 중심에 위치
-            .attr("text-anchor", "middle") // 중앙 정렬
+            .attr("dy", "1.5em")
+            .attr("x", 0)
+            .attr("text-anchor", "middle")
             .text(d => d.data.name)
-            .style("font-size", "12px")
-            .clone(true).lower()
-            .attr("stroke", "white");
+            .style("font-size", "12px");
 
     </script>
 </body>
